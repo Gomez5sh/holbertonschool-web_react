@@ -1,6 +1,6 @@
 import { shallow, mount } from "enzyme";
 import React from "react";
-import App, { listNotificationsInitialState } from "./App";
+import App from "./App";
 import { StyleSheetTestUtils } from "aphrodite";
 import AppContext, { user, logOut } from "./AppContext";
 
@@ -156,37 +156,5 @@ describe("<App />", () => {
     instance.logOut();
 
     expect(wrapper.state().user).toEqual(user);
-  });
-
-  it("verify that markNotificationAsRead works as intended", () => {
-    const wrapper = mount(
-      <AppContext.Provider value={{ user, logOut }}>
-        <App />
-      </AppContext.Provider>
-    );
-
-    const instance = wrapper.instance();
-
-    expect(wrapper.state().listNotifications).toEqual(
-      listNotificationsInitialState
-    );
-
-    instance.markNotificationAsRead(4);
-
-    expect(wrapper.state().listNotifications).toEqual(
-      listNotificationsInitialState
-    );
-
-    instance.markNotificationAsRead(3);
-
-    expect(wrapper.state().listNotifications).toEqual(
-      listNotificationsInitialState.slice(0, 2)
-    );
-
-    instance.markNotificationAsRead(1);
-
-    expect(wrapper.state().listNotifications).toEqual(
-      listNotificationsInitialState.slice(1, 2)
-    );
   });
 });

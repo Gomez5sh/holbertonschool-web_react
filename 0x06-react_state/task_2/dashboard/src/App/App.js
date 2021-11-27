@@ -18,7 +18,7 @@ const listCourses = [
   { id: 3, name: "React", credit: 40 },
 ];
 
-export const listNotificationsInitialState = [
+const listNotifications = [
   { id: 1, type: "default", value: "New course available" },
   { id: 2, type: "urgent", value: "New resume available" },
   { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
@@ -34,13 +34,7 @@ class App extends Component {
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
-    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
-    this.state = {
-      displayDrawer: false,
-      user,
-      logOut: this.logOut,
-      listNotifications: listNotificationsInitialState,
-    };
+    this.state = { displayDrawer: false, user, logOut: this.logOut };
   }
 
   handleKeyCombination(e) {
@@ -72,14 +66,6 @@ class App extends Component {
     this.setState({ user });
   }
 
-  markNotificationAsRead(id) {
-    this.setState({
-      listNotifications: this.state.listNotifications.filter((notification) => {
-        return notification.id !== id;
-      }),
-    });
-  }
-
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyCombination);
   }
@@ -94,7 +80,6 @@ class App extends Component {
       user: { isLoggedIn },
       logOut,
       displayDrawer,
-      listNotifications,
     } = this.state;
 
     const value = { user, logOut };
@@ -106,7 +91,6 @@ class App extends Component {
           displayDrawer={displayDrawer}
           handleDisplayDrawer={this.handleDisplayDrawer}
           handleHideDrawer={this.handleHideDrawer}
-          markNotificationAsRead={this.markNotificationAsRead}
         />
         <div className={css(styles.container)}>
           <div className={css(styles.app)}>
@@ -180,9 +164,7 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     justifyContent: "center",
-    textAlign: "center",
     position: "fixed",
-    paddingBottom: "10px",
     bottom: 0,
     fontStyle: "italic",
     [screenSize.small]: {
