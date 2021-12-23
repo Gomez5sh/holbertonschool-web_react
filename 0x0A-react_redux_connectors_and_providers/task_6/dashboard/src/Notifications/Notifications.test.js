@@ -139,43 +139,6 @@ describe("<Notifications />", () => {
         }),
       };
     });
-
-    it("Notifications renders Notification Items and items have correct html", () => {
-      const messages = getUnreadNotifications(listNotifications);
-
-      const wrapper = mount(
-        <Notifications displayDrawer listNotifications={messages} />
-      );
-      expect(wrapper.exists());
-      wrapper.update();
-      const listItems = wrapper.find("NotificationItem");
-      expect(listItems).toBeDefined();
-      expect(listItems).toHaveLength(3);
-      // expect(listItems.at(0).contains()).toEqual(
-      //   '<li data-notification-type="default">New course available</li>'
-      // );
-      expect(listItems.at(0).html()).toContain("<li");
-      expect(listItems.at(0).props().type).toEqual("default");
-      expect(listItems.at(0).text()).toEqual("New course available");
-
-      // expect(listItems.at(1).html()).toEqual(
-      //   '<li data-notification-type="urgent">New resume available</li>'
-      // );
-
-      expect(listItems.at(1).html()).toContain("<li");
-      expect(listItems.at(1).props().type).toEqual("urgent");
-      expect(listItems.at(1).text()).toEqual("New resume available");
-
-      // expect(listItems.at(2).html()).toEqual(
-      //   `<li data-notification-type="urgent">${latestNotification}</li>`
-      // );
-
-      expect(listItems.at(2).html()).toContain("<li");
-      expect(listItems.at(2).props().type).toEqual("urgent");
-      expect(listItems.at(2).text()).toEqual(
-        "Urgent requirement - complete by EOD"
-      );
-    });
   });
 
   describe("Notifications without listNotifications or empty listNotifications", () => {
@@ -209,7 +172,6 @@ describe("<Notifications />", () => {
       expect(listItems.props().type).toEqual("noNotifications");
       expect(listItems.text()).toEqual("No new notifications for now");
     });
-
 
     it("verify that clicking on the menu item calls handleDisplayDrawer", () => {
       const handleDisplayDrawer = jest.fn();
